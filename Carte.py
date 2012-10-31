@@ -19,8 +19,9 @@ class Salle():
         ligne = f.read()
         
         for i in ligne.splitlines():
-            self.salle= list(ligne)
-            print(self.salle[0])
+            i.split('\n')
+            self.salle= list(i)
+            print(self.salle)
         
 if __name__ == '__main__':
     s = Salle()
