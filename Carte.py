@@ -1,16 +1,23 @@
 class Carte():
     def __init__(self):
-        pass
-    
-    
+        self.nomMap = "assets/map/F_E1S1.txt"
+        self.s = Salle()
+        self.s.chargeCarte(self.nomMap)
+
+        """Les deux prochaines lignes sont ici pour donner l'exemple seulement"""
+        self.changement(1,2)
+        self.s.chargeCarte(self.nomMap)
+
+    def changement(self, numEnigme, numSalle):
+        self.nomMap = "assets/map/F_E"+ str(numEnigme) + "S" + str(numSalle) + ".txt"
     
 class Salle():
     def __init__(self):
         self.salle = list()
-        self.chargeCarte()
     
-    def chargeCarte(self):
-        f = open('assets/map/map2.mp', 'r')
+    def chargeCarte(self, nomMap):
+        f = open(str(nomMap), 'r')
+        self.salle = list()
         
         f.readline()
         f.readline()
@@ -21,10 +28,11 @@ class Salle():
         for i in ligne.splitlines():
             i.split('\n')
             self.salle= list(i)
-            print(self.salle)
+            print (self.salle)
         
 if __name__ == '__main__':
-    s = Salle()
+    c = Carte()
+
         
         
         
