@@ -5,10 +5,16 @@ class Balle():
         self.x = departX
         self.y = departY
         self.force = force
+        self.radius = 5
         self.velocite = 5
-        self.entreDeux = math.sqrt((finX-departX)^2+(finY-departY)^2)
-        self.veloX = (self.velocite * finX - departX)/self.entreDeux
-        self.veloY = (self.velocite * finY - departY)/self.entreDeux
+        self.entreDeux = math.sqrt(abs((finX-departX)^2+(finY-departY)^2))
+        '''self.veloX = ((self.velocite * (finX - departX))/self.entreDeux)
+        self.veloY = ((self.velocite * (finY - departY))/self.entreDeux)'''
+        
+        tempX = departX + ((self.velocite/(self.entreDeux))*(finX-departX))
+        tempY = departY + ((self.velocite/(self.entreDeux))*(finY-departY))
+        self.veloX = ((self.velocite * (tempX - departX))/self.entreDeux)
+        self.veloY = ((self.velocite * (tempY - departY))/self.entreDeux)
         
     def bouge(self):
         self.x += self.veloX
@@ -16,17 +22,21 @@ class Balle():
         
     def collision(self, listePersonnage):
         for i in listePersonnage:
-            rectangle = i.obtenirLimite()
-            if self.x > rectangle[0] and self.x < rectangle[2]:
-                if self.y > rectangle[1] and self.y < rectangle[3]:
-                    i.touche(self.force)
-                    return True
+            rectPerso = i.obtenirLimite()
+            rectBalle = self.obtenirLimite()
+            j=0
+            while j < 4:
+                if rectBalle[j] > rectPerso[0] and rectBalle[j] < rectPerso[2]:
+                    k=1
+                    while k < 4:
+                        if rectBalle[k] > rectPerso[1] and rectBalle[k] < rectPerso[3]:
+                            i.touche(self.force)
+                            return True
+                        k+=2
+                j+=2
                 
         return False
         
     def obtenirLimite(self):
-        x = self.x+5
-        y = self.y+5
-        rayon = 5
-        return x, y, rayon
+        return [self.x, self.y, self.x+self.radius, self.y+self.radius]
     

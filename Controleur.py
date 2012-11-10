@@ -15,7 +15,9 @@ class Controleur():
     
     def miseAJour(self):
         self.actualiser()
-        self.app.map.after(10,self.miseAJour)
+        self.app.map.delete("balle")
+        self.app.tire()
+        self.app.map.after(30,self.miseAJour)
     
     def rechargement(self):
         self.jeu.joueur.recharge()

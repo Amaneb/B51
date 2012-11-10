@@ -64,8 +64,6 @@ class Personnage():
                     break
     
     def tire(self, listeBalle, x, y):
-        print(x)
-        print(y)
         for i in self.inventaire.items:
             #ID de l'armure = 7
             if i.id == 7:
