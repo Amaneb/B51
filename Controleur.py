@@ -60,16 +60,16 @@ class Controleur():
             self.app.affichageMap()
     
     def infoHumain(self):
-        self.jeu.info("Humain")
+        return self.jeu.info("Humain")
         
     def infoPopamu(self):
-        self.jeu.info("Popamu")
+        return self.jeu.info("Popamu")
         
     def infoIrki(self):
-        self.jeu.info("Irki")
+        return self.jeu.info("Irki")
         
     def infoAtarix(self):
-        self.jeu.info("Atarix")
+        return self.jeu.info("Atarix")
         
     def nouveauHumain(self):
         self.jeu.nouveauJoueur("Humain")

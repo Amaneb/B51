@@ -1,3 +1,4 @@
+# -*- coding: ISO-8859-1 -*-
 import math
 
 class Balle():
@@ -10,17 +11,6 @@ class Balle():
         self.entreDeux = math.sqrt(abs((finX-departX)**2)+abs((finY-departY)**2))
         self.veloX = ((self.velocite * (finX - departX))/self.entreDeux)
         self.veloY = ((self.velocite * (finY - departY))/self.entreDeux)
-        
-        print("X : " + str(finX-departX))
-        print("Y : " + str(finY-departY))
-        print("Entre deux : " + str(self.entreDeux))
-        print("veloX : " + str(self.veloX))
-        print("veloY : " + str(self.veloY))
-                
-        '''tempX = departX + ((self.velocite/(self.entreDeux))*(finX-departX))
-        tempY = departY + ((self.velocite/(self.entreDeux))*(finY-departY))
-        self.veloX = ((self.velocite * (tempX - departX))/self.entreDeux)
-        self.veloY = ((self.velocite * (tempY - departY))/self.entreDeux)'''
         
     def bouge(self):
         self.x += self.veloX

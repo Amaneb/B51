@@ -26,7 +26,6 @@ class Application(tkinter.Frame):
         #position du joueur centre dans l'ecran
         self.posEcranX=self.largeurJeu/2
         self.posEcranY=self.hauteurJeu/2
-
         b1 = tkinter.Button(text="New Humain", command=self.parent.nouveauHumain)
         b4 = tkinter.Button(text="New Irki", command=self.parent.nouveauIrki)
         b5 = tkinter.Button(text="New Popamu", command=self.parent.nouveauPopamu)
@@ -39,11 +38,14 @@ class Application(tkinter.Frame):
         b12= tkinter.Button(text="Craft Armor", command=self.parent.fabricationArmure)
         b13 = tkinter.Button(text="Craft Gun", command=self.parent.fabricationFusil)
         b14 = tkinter.Button(text="Craft Dematerializator", command=self.parent.fabricationDematerialisateur)
-        b15 = tkinter.Button(text="get Humain info", command=self.parent.infoHumain)
+        b15 = tkinter.Button(text="get Humain info", command=self.infoHumain)
+        b16 = tkinter.Button(text="get Popamu info", command=self.infoPopamu)
+        b17 = tkinter.Button(text="get Irki info", command=self.infoIrki)
+        b18 = tkinter.Button(text="get Atarix info", command=self.infoAtarix)
         b1.grid(column=0, row=0)
         b4.grid(column=1, row=0)
         b5.grid(column=2, row=0)
-        b6.grid(column=0, row=1)
+        b6.grid(column=3, row=0)
         b7.grid(column=1, row=1)
         b8.grid(column=2, row=1)
         b9.grid(column=0, row=2)
@@ -53,13 +55,27 @@ class Application(tkinter.Frame):
         b13.grid(column=1, row=3)
         b14.grid(column=2, row=3)
         b15.grid(column=0, row=4)
-            
-        #self.initMap()
+        b16.grid(column=1, row=4)
+        b17.grid(column=2, row=4)
+        b18.grid(column=3, row=4)
+        
+    def infoHumain(self):
+        temp = self.parent.infoHumain()
+        
+    def infoPopamu(self):
+        temp = self.parent.infoPopamu()
+        
+    def infoIrki(self):
+        temp = self.parent.infoIrki()
+        
+    def infoAtarix(self):
+        temp = self.parent.infoAtarix()
         
     def initMap(self):
         self.root.destroy()
         self.root=tkinter.Tk()
         self.root.config(width=self.largeurFrame, height=self.hauteurFrame)
+        self.root.focus_force()
         #position des premiers blocs
         self.parent.jeu.joueur.posDepartX=self.largeurJeu/2
         self.parent.jeu.joueur.posDepartY=100
@@ -143,7 +159,11 @@ class Application(tkinter.Frame):
         self.posMilieuDiagoX=self.parent.jeu.joueur.posDepartX-(len(self.laListe[1])-1)*32
         self.posMilieuDiagoY=self.parent.jeu.joueur.posDepartY+(len(self.laListe)-1)*16
         if self.parent.jeu.listePersonnage:
-            self.map.create_rectangle(self.parent.jeu.listePersonnage[0].x, self.parent.jeu.listePersonnage[0].y, self.parent.jeu.listePersonnage[0].x+100, self.parent.jeu.listePersonnage[0].y+100, fill='blue')
+            temp = self.parent.jeu.listePersonnage[0].obtenirLimite()
+            #self.map.create_rectangle(self.parent.jeu.listePersonnage[0].x, self.parent.jeu.listePersonnage[0].y, self.parent.jeu.listePersonnage[0].x+100, self.parent.jeu.listePersonnage[0].y+100, fill='blue')
+            self.map.create_rectangle(temp[0], temp[1], temp[2], temp[3], fill='blue')
+            self.map.create_image(self.parent.jeu.listePersonnage[0].x,self.parent.jeu.listePersonnage[0].y-32, image=self.perso)
+            
             
     def tire(self):  
         for i in self.parent.jeu.listeBalle:
