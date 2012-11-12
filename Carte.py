@@ -1,23 +1,29 @@
+import os
+
 class Carte():
     def __init__(self):
-        self.nomMap = "F_E1S1"
+        self.nomMap = "MainRoom"
         self.s = Salle()
         self.s.chargeCarte(self.nomMap)
         self.chargeObjets()
 		
-    def chargeObjets(self):	
-        liens = open("liens/liens.txt", 'r')
+    def chargeObjets(self):
+        try:
+            liens = open("liens/liens.txt", 'r')
+        except IOError:
+            print ("Le fichier liens.txt n'a pas été retrouvé (liens/liens.txt)")
+            os._exit(1)
+            
         ligne = list()
         ligne = liens.read()
 
         """Tous les objets possible"""
-        self.listeObjet = ["Logomate", "Sac", "Coffre", "Test"]
+        self.listeObjet = ["Logomate", "Sac", "Coffre"]
 
         """Liste des positions de chaque objet """
         self.listeLogo = list()
         self.listeSac = list()
         self.listeCoffre = list()
-        self.listeTest = list()
         
         self.mapValide = False
         self.valideAssign = False
@@ -27,52 +33,52 @@ class Carte():
         for i in ligne.splitlines():
             i.split('\n')
             if(i == self.nomMap):
-                print ("CHARGEMENT OBJETS DE LA MAP: " + self.nomMap)
+                print ("Chargement des objets de la map: " + self.nomMap)
                 for j in ligne.splitlines():
                     if(j == self.nomMap):
                         self.mapValide = True
                         self.valideEmplacement = True
                     if(j == self.listeObjet[self.posListeObj] and self.mapValide == True):
-                        print("CHARGEMENT OBJETS: " + self.listeObjet[self.posListeObj])
                         self.valideAssign = True
                         self.mapValide = False
                     elif(self.valideAssign == True and j != "break"):
                         if(self.listeObjet[self.posListeObj] == "Logomate"):
-                            self.listeLogo.append(j)
+                            self.listeLogo.append(self.convertion(j))
                         elif (self.listeObjet[self.posListeObj] == "Sac"):
-                            self.listeSac.append(j)
+                            self.listeSac.append(self.convertion(j))
                         elif(self.listeObjet[self.posListeObj] == "Coffre"):
-                            self.listeCoffre.append(j)
-                        elif(self.listeObjet[self.posListeObj] == "Test"):
-                            self.listeTest.append(j)
+                            self.listeCoffre.append(self.convertion(j))
                     elif(self.valideAssign == True and j == "break"):
                         self.valideAssign = False
                         self.mapValide = True
                         self.posListeObj += 1
+                        
                         if(self.posListeObj >= len(self.listeObjet)):
                             self.posListeObj -= 1
                     if(j == ";" and self.validePlaceFichier == True):
                         break
                 break
 
-        """Pour afficher les positions (test seulement)"""
-        print (self.listeLogo)
-        print (self.listeSac)
-        print (self.listeCoffre)
-        print (self.listeTest)
-            
+    def convertion(self, variable): #converti les position (5:5) en liste [(5,5) ...]
+        self.var = variable
+        self.tempo = self.var.split(":")
+        return self.tempo
 
 class Salle():
     def __init__(self):
         self.salle = list()
     
     def chargeCarte(self, nomMap):
-        f = open("Map/" + nomMap + ".mp", 'r')
+        try:
+            f = open("Map/" + nomMap + ".mp", 'r')
+        except IOError:
+            print ("La map " + nomMap + "n'existe pas.")
+            os._exit(1)
+            
+        f.readline()
+        f.readline()
+        f.readline()
         self.salle = list()
-        
-        f.readline()
-        f.readline()
-        f.readline()
         ligne = list()
         ligne = f.read()
         
@@ -80,5 +86,5 @@ class Salle():
             i.split('\n')
             self.salle.append(i)
 
-#if __name__=="__main__":
-    #Carte()
+if __name__=="__main__":
+    Carte()
