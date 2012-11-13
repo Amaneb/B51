@@ -5,7 +5,7 @@ class Carte():
         self.nomMap = "MainRoom"
         self.s = Salle()
         self.s.chargeCarte(self.nomMap)
-        self.chargeObjets()
+        #self.chargeObjets()
     	
     def chargeObjets(self):
         try:
