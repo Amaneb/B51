@@ -59,7 +59,7 @@ class Carte():
                         break
                 break
 
-    def convertion(self, variable): #converti les position (5:5) en liste [(5,5) ...]
+    def convertion(self, variable): #convertit les positions (5:5) en liste [(5,5) ...]
         self.var = variable
         self.tempo = self.var.split(":")
         return self.tempo
@@ -74,8 +74,13 @@ class Salle():
         except IOError:
             print ("La map " + nomMap + "n'existe pas.")
             os._exit(1)
-            
-        f.readline()
+
+        """Dimensions de la carte"""    
+        self.dimensionCarte = f.readline()
+        self.tempo = self.dimensionCarte.split(":")
+        self.nbColonne = self.tempo[0]
+        self.nbLigne = self.tempo[1]
+
         f.readline()
         f.readline()
         self.salle = list()
@@ -86,5 +91,5 @@ class Salle():
             i.split('\n')
             self.salle.append(i)
 
-if __name__=="__main__":
-    Carte()
+#if __name__=="__main__":
+    #Carte()
